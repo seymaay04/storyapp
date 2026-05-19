@@ -29,13 +29,13 @@ app.use((req, res, next) => {
 });
 
 // Veritabanı Bağlantısı
+console.log("Bağlanmaya çalışılan URI:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("🚀 Veritabanı bağlandı!"))
     .catch(err => console.log("❌ Hata:", err));
 
-// ==========================================
+    
 // YÖNLENDİRMELER (ROUTES)
-// ==========================================
 
 // 1. ANA SAYFA
 app.get('/', async (req, res) => {
