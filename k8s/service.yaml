@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: storyapp-service
+  labels:
+    project: storyapp-odev
+spec:
+  type: LoadBalancer # Dışarıya açılan sistem
+  selector:
+    app: storyapp # Trafiği az önce yarattığımız podlara yönlendirmesi için etiket bağı
+  ports:
+    - protocol: TCP
+      port: 80 # Kullanıcıların internet tarayıcısından gireceği standart port (HTTP)
+      targetPort: 3000 # Bizim Node.js uygulamamızın içeride çalıştığı port

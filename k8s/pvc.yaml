@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: storyapp-log-pvc
+  labels:
+    project: storyapp-odev
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi # Google Cloud'dan 1 Gigabyte'lık kalıcı disk alanı talep ediyoruz

@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: storyapp-network-policy
+  labels:
+    project: storyapp-odev
+spec:
+  podSelector:
+    matchLabels:
+      app: storyapp # Hangi podları koruyacağımızı seçiyoruz
+  policyTypes:
+  - Ingress # Sadece içeri giren trafiği denetleyeceğiz
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 3000 # Sadece 3000 portundan gelen misafirlere izin ver

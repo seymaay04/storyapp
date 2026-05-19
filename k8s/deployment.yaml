@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storyapp-deployment
+  labels:
+    project: storyapp-odev
+spec:
+  replicas: 3 # Sistem 3 kopya halinde çalışacak
+  selector:
+    matchLabels:
+      app: storyapp
+  template: # Buradan aşağısı tek bir Pod'un tarifi
+    metadata:
+      labels:
+        app: storyapp
+        project: storyapp-odev
+    spec:
+      containers:
+      - name: storyapp-container
+        image: gcr.io/storyapp-cloud/storyapp:latest 
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: storyapp-db-secret # Açtığımız şifre kasasının adı
+              key: mongo-uri
+        volumeMounts:
+        - name: log-volume
+          mountPath: /app/logs # Uygulamanın logları yazacağı klasör
+      volumes:
+      - name: log-volume
+        persistentVolumeClaim:
+          claimName: storyapp-log-pvc # Oluşturduğumuz kalıcı diskin adı

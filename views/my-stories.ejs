@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Benim Yazılarım | StoryApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark shadow">
+        <div class="container">
+            <a class="navbar-brand" href="/">✒️ StoryApp</a>
+            <div>
+                <span class="text-white me-3">Merhaba, <%= user.username %></span>
+                <a href="/" class="btn btn-outline-light btn-sm">🏠 Tüm Hikayeler</a>
+                <a href="/add" class="btn btn-success btn-sm ms-2">Yazı Paylaş</a>
+                <a href="/logout" class="btn btn-danger btn-sm ms-2">Çıkış Yap</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="text-secondary">✍️ Sadece Benim Paylaştıklarım</h3>
+            <span class="badge bg-primary fs-6">Toplam: <%= stories.length %> Yazı</span>
+        </div>
+        
+        <% if (stories.length === 0) { %>
+            <div class="alert alert-warning">Henüz hiç yazı paylaşmamışsın. Kalemini konuşturmaya ne dersin?</div>
+        <% } %>
+
+        <div class="row">
+            <% stories.forEach(story => { %>
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow-sm border-start border-primary border-4">
+                        <div class="card-body">
+                            <h4 class="card-title text-primary"><%= story.title %></h4>
+                            <h6 class="card-subtitle mb-3 text-muted">Tarih: <%= new Date(story.createdAt).toLocaleDateString('tr-TR') %></h6>
+                            
+                            <% if (story.content.length > 400) { %>
+                                <div class="collapse show toggle-<%= story._id %>">
+                                    <p class="card-text" style="white-space: pre-wrap;"><%= story.content.substring(0, 400) %>...</p>
+                                    <button class="btn btn-link p-0 text-decoration-none btn-sm fw-bold" type="button" data-bs-toggle="collapse" data-bs-target=".toggle-<%= story._id %>">Daha Fazla Göster 🔽</button>
+                                </div>
+                                <div class="collapse toggle-<%= story._id %>">
+                                    <p class="card-text" style="white-space: pre-wrap;"><%= story.content %></p>
+                                    <button class="btn btn-link p-0 text-decoration-none btn-sm fw-bold" type="button" data-bs-toggle="collapse" data-bs-target=".toggle-<%= story._id %>">Daha Az Göster 🔼</button>
+                                </div>
+                            <% } else { %>
+                                <p class="card-text" style="white-space: pre-wrap;"><%= story.content %></p>
+                            <% } %>
+                            
+                            <div class="d-flex mt-3 border-top pt-2">
+                                <a href="/edit/<%= story._id %>" class="btn btn-outline-warning btn-sm me-2">Düzenle</a>
+                                <form action="/delete/<%= story._id %>?_method=DELETE" method="POST">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Sil</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
