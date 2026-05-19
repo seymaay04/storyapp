@@ -1,5 +1,5 @@
 # Node.js'in hafif ve güvenli alpine sürümünü taban alıyoruz
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Konteyner içinde projemizin çalışacağı klasör
 WORKDIR /app
