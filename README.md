@@ -1,10 +1,10 @@
 # StoryApp - Bulut Bilişim Final Projesi
 
-**Hazırlayan:** Şeyma Ay
-**Numara:** 24110310036
-**Proje GitHub Linki:** https://github.com/seymaay04/storyapp
+- **Hazırlayan:** Şeyma Ay  
+- **Numara:** 24110310036  
+- **Proje GitHub Linki:** https://github.com/seymaay04/storyapp
 
-## 📌 Proje Özeti
+##  Proje Özeti
 Bu proje, basit bir web uygulamasının (StoryApp) Docker ile konteynerize edilerek Google Kubernetes Engine (GKE) üzerinde modern bulut bilişim standartlarına uygun şekilde dağıtılmasını ve CI/CD süreçleriyle otomatik olarak yönetilmesini amaçlamaktadır.
 
 ---
