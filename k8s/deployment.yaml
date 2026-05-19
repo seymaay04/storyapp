@@ -5,7 +5,7 @@ metadata:
   labels:
     project: storyapp-odev
 spec:
-  replicas: 1 # Sistem 3 kopya halinde çalışacak
+  replicas: 1 # Sistem 1 kopya halinde çalışacak
   selector:
     matchLabels:
       app: storyapp
