@@ -1,11 +1,11 @@
 steps:
   # Docker imajını kaynaktan inşa et (Etiket olarak commit ID'sini basıyoruz)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/storyapp:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/storyapp:latest', '.']
 
   # Oluşan imajı Google Container Registry (GCR) deposuna güvenlice yükle
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/storyapp:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/storyapp:latest']
 
   # Google Kubernetes Engine (GKE) kümesine güvenli bağlantı kur
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -23,8 +23,8 @@ steps:
     args:
       - '-c'
       - |
-        sed -i 's|image:.*|image: gcr.io/$PROJECT_ID/storyapp:$COMMIT_SHA|g' k8s/deployment.yaml
+        sed -i 's|image:.*|image: gcr.io/$PROJECT_ID/storyapp:latest|g' k8s/deployment.yaml
         kubectl apply -f k8s/
 
 images:
-  - 'gcr.io/$PROJECT_ID/storyapp:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/storyapp:latest'
