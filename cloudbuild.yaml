@@ -26,6 +26,10 @@ steps:
         sed -i 's|image:.*|image: gcr.io/$PROJECT_ID/storyapp:latest|g' k8s/deployment.yaml
         kubectl apply -f k8s/
 
+    # Otomatik yeniden başlatma
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['rollout', 'restart', 'deployment', 'storyapp-deployment']
+
 images:
   - 'gcr.io/$PROJECT_ID/storyapp:latest'
 
