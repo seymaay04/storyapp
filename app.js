@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method')); // Silme ve güncelleme işlemleri için
 
-// Kullanıcı Girişi (Session) Ayarı
+// Kullanıcı Girişi Ayarı
 app.use(session({
     secret: 'cok_gizli_anahtar',
     resave: false,
@@ -31,20 +31,20 @@ app.use((req, res, next) => {
 // Veritabanı Bağlantısı
 console.log("Bağlanmaya çalışılan URI:", process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("🚀 Veritabanı bağlandı!"))
-    .catch(err => console.log("❌ Hata:", err));
+    .then(() => console.log("Veritabanı bağlandı!"))
+    .catch(err => console.log("Hata:", err));
 
     
-// YÖNLENDİRMELER (ROUTES)
+// YÖNLENDİRMELER
 
-// 1. ANA SAYFA
+// 1. Ana sayfa
 app.get('/', async (req, res) => {
     // Tüm hikayeleri en yeniden en eskiye sıralayarak getir
     const stories = await Story.find().sort({ createdAt: -1 });
     res.render('index', { stories });
 });
 
-// 2. GİRİŞ VE KAYIT EKRANI
+// 2. Giriş ve kayıt ekranı
 app.get('/auth', (req, res) => {
     res.render('auth', { error: null });
 });
@@ -89,7 +89,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-// 3. YAZI EKLEME
+// 3. Yazı ekleme
 app.get('/add', (req, res) => {
     if (!req.session.user) return res.redirect('/auth'); // Giriş yapılmamışsa at
     res.render('add');
@@ -106,7 +106,7 @@ app.post('/add', async (req, res) => {
     res.redirect('/');
 });
 
-// 4. YAZI DÜZENLEME
+// 4. Yazı düzenleme
 app.get('/edit/:id', async (req, res) => {
     if (!req.session.user) return res.redirect('/auth');
     
@@ -127,11 +127,11 @@ app.put('/edit/:id', async (req, res) => {
     res.redirect('/');
 });
 
-// 5. YAZI SİLME
+// 5. Yazı silme
 app.delete('/delete/:id', async (req, res) => {
     if (!req.session.user) return res.redirect('/auth');
     
-    // Güvenlik: Sadece sahibi silebilir (bunu garantiye almak için ek kontrol yapıyoruz)
+    // Sadece sahibi silebilir
     const story = await Story.findById(req.params.id);
     if(story && story.author === req.session.user.username){
         await Story.findByIdAndDelete(req.params.id);
@@ -140,7 +140,7 @@ app.delete('/delete/:id', async (req, res) => {
     res.redirect('/');
 });
 
-// 6. BENİM HİKAYELERİM (Sadece giriş yapan kullanıcının kendi yazılarını listeler)
+// 6. Benim hikayelerim (Sadece giriş yapan kullanıcının kendi yazılarını listeler)
 app.get('/my-stories', async (req, res) => {
     if (!req.session.user) return res.redirect('/auth'); // Giriş yapılmamışsa giriş ekranına at
     
@@ -150,7 +150,7 @@ app.get('/my-stories', async (req, res) => {
     res.render('my-stories', { stories: myStories });
 });
 
-// 7. HERHANGİ BİR YAZARIN PROFİLİ / HİKAYELERİ (Dinamik Rota)
+// 7. Yazarın profili / hikayeleri
 app.get('/author/:username', async (req, res) => {
     const authorName = req.params.username;
     
@@ -166,5 +166,5 @@ app.get('/author/:username', async (req, res) => {
 // Sunucuyu Ayaklandır
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`🌍 Sunucu ayağa kalktı: http://localhost:${PORT}`);
+    console.log(`Sunucu ayağa kalktı: http://localhost:${PORT}`);
 });
