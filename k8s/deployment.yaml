@@ -1,4 +1,4 @@
-apiVersion: apps/v2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: storyapp-deployment
@@ -29,6 +29,8 @@ spec:
             secretKeyRef:
               name: storyapp-db-secret # Açtığımız şifre kasasının adı
               key: mongo-uri
+        - name: APP_VERSION
+          value: "v2.0"
 
         volumeMounts:
         - name: log-volume
