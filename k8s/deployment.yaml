@@ -6,6 +6,8 @@ metadata:
     project: storyapp-odev
 spec:
   replicas: 1 # Sistem 1 kopya halinde çalışacak
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: storyapp
