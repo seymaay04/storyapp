@@ -22,10 +22,7 @@ spec:
         - containerPort: 3000
         env:
         - name: MONGO_URI
-          valueFrom:
-            secretKeyRef:
-              name: storyapp-db-secret # Açtığımız şifre kasasının adı
-              key: mongo-uri
+          value: "mongodb+srv://seyma_dev:Ay539420@cluster0.rqh5mdv.mongodb.net/?appName=Cluster0"
         volumeMounts:
         - name: log-volume
           mountPath: /app/logs # Uygulamanın logları yazacağı klasör
