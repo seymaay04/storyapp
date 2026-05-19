@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: storyapp-container
-        image: gcr.io/storyapp-cloud/storyapp:latest 
+        image: gcr.io/storyapp-cloud/storyapp:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
