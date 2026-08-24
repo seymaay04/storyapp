@@ -1,8 +1,4 @@
-# StoryApp - Bulut Bilişim Final Projesi
-
-- **Hazırlayan:** Şeyma Ay  
-- **Numara:** 24110310036  
-- **Proje GitHub Linki:** https://github.com/seymaay04/storyapp
+# StoryApp - Cloud-Native Web Application & CI/CD Pipeline
 
 ##  Proje Özeti
 Bu proje, basit bir web uygulamasının (StoryApp) Docker ile konteynerize edilerek Google Kubernetes Engine (GKE) üzerinde modern bulut bilişim standartlarına uygun şekilde dağıtılmasını ve CI/CD süreçleriyle otomatik olarak yönetilmesini amaçlamaktadır.
@@ -47,7 +43,7 @@ kubectl scale deployment/storyapp-deployment --replicas=5
 (Not: Uygulamanın veri kalıcılığını sağlamak amacıyla kullanılan Persistent Volume, ReadWriteOnce (RWO) erişim moduna sahiptir. Bu mod, bir diskin aynı anda sadece tek bir sunucu (Node) tarafından okunup yazılmasına izin veren blok depolama (Block Storage) prensibine dayanır. Bu durum, donanımsal bir kısıt olup; diskin verisinin bozulmaması için aynı anda birden fazla sunucuya bağlanması teknik olarak mümkün değildir. Çoklu sunucu üzerinden ölçekleme yapılması durumunda; podların aynı sunucu üzerinde çalışması (Node Affinity) veya bulut tabanlı merkezi bir dosya depolama sistemi (NFS/Filestore) yapılandırılması gerekmektedir. Proje tek replika üzerinde yüksek performanslı çalışacak şekilde optimize edilmiştir.)
 
 
-**Güncelleme Stratejisi (Update Strategy):** Yönerge gereği sisteme eklenen Persistent Volume (PVC), ReadWriteOnce erişim moduna sahiptir. Bu disk türünde Rolling Update kullanılması, eski Pod diski bırakmadan yeni Pod'un diski talep etmesine ve sistemin "Deadlock" (kilitlenme) durumuna düşmesine sebep olabilir. Bu nedenle veri bütünlüğünü korumak ve kilitlenmeleri önlemek amacıyla deployment.yaml içerisinde bilinçli olarak Recreate stratejisi yapılandırılmıştır.
+**Güncelleme Stratejisi (Update Strategy):** Sistemde kullanılan RWO (ReadWriteOnce) tabanlı disklerde Rolling Update kullanılması, eski Pod diski bırakmadan yeni Pod'un diski talep etmesine ve sistemin "Deadlock" (kilitlenme) durumuna düşmesine sebep olabilir. Veri bütünlüğünü korumak ve kesintileri önlemek amacıyla deployment.yaml içerisinde bilinçli olarak Recreate stratejisi yapılandırılmıştır.
 ```bash
 kubectl rollout status deployment/storyapp-deployment
 ```
